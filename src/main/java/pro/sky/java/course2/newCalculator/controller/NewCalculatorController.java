@@ -1,10 +1,9 @@
 package pro.sky.java.course2.newCalculator.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pro.sky.java.course2.newCalculator.exception.MyIllegalArgumentException;
 import pro.sky.java.course2.newCalculator.service.*;
 
 @RestController
@@ -34,5 +33,10 @@ import pro.sky.java.course2.newCalculator.service.*;
     @GetMapping(path="/divide")
     public String divide(@RequestParam("num1") String num1, @RequestParam("num2") String num2){
         return newCalculatorService.calculate(4, num1, num2);
+    }
+
+    @ExceptionHandler(MyIllegalArgumentException.class)
+    public String MyIllegalArgumentException(MyIllegalArgumentException e) {
+        return e.getMessage();
     }
 }

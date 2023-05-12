@@ -1,6 +1,8 @@
 package pro.sky.java.course2.newCalculator.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import pro.sky.java.course2.newCalculator.exception.MyIllegalArgumentException;
 
 @Service
 public class NewCalculatorServiceImpl implements NewCalculatorService {
@@ -9,9 +11,13 @@ public class NewCalculatorServiceImpl implements NewCalculatorService {
     int parsedNum2;
     String str;
     public String calculate(int operation , String num1, String  num2){
-        if (num1.equals("")||num2.equals("")) {return " Ошибка ввода данных ";}
-        parsedNum1 = Integer.parseInt(num1);
-        parsedNum2 = Integer.parseInt(num2);
+     //   if (num1.equals("")||num2.equals("")) {return " Ошибка ввода данных ";}
+        if (StringUtils.isNumeric(num1)&&StringUtils.isNumeric(num2)) {
+            parsedNum1 = Integer.parseInt(num1);
+            parsedNum2 = Integer.parseInt(num2);
+        }else {
+            throw new MyIllegalArgumentException("Ошибка ввода данных. Введите числа.");
+        }
         switch (operation){
             case 1 :
                 result = parsedNum1 + parsedNum2;
@@ -26,7 +32,9 @@ public class NewCalculatorServiceImpl implements NewCalculatorService {
                 str = " * ";
                 break;
             case 4 :
-                if (parsedNum2==0) {return " Ошибка ввода данных: Делить на 0 нельзя !!!";}
+                if (parsedNum2==0) {
+                    throw new MyIllegalArgumentException("Ошибка ввода данных: Делить на 0 нельзя !!!");
+                }
                 result = (double) parsedNum1 / parsedNum2;
                 str = " / ";
                 break;
