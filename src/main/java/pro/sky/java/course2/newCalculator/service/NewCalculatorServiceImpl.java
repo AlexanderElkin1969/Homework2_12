@@ -11,8 +11,9 @@ public class NewCalculatorServiceImpl implements NewCalculatorService {
     int parsedNum2;
     String str;
     public String calculate(int operation , String num1, String  num2){
-     //   if (num1.equals("")||num2.equals("")) {return " Ошибка ввода данных ";}
-        if (StringUtils.isNumeric(num1)&&StringUtils.isNumeric(num2)) {
+        String first = StringUtils.removeStart(num1, "-");
+        String second = StringUtils.removeStart(num2, "-");
+        if (StringUtils.isNumeric(first)&&StringUtils.isNumeric(second)) {
             parsedNum1 = Integer.parseInt(num1);
             parsedNum2 = Integer.parseInt(num2);
         }else {
